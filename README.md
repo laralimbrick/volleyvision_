@@ -4,7 +4,8 @@ A p5.js prototype that annotates volleyball sets from video and reports metrics
 (peak height, set width). Built for athlete self-analysis and empowerment.
 
 ## Run locally
-- Open with VS Code, and ensure all three files are loaded in. 
+- From Github, click on the big green button that says 'Code' 
+- Open with VS Code, and ensure all three files are loaded in.=
 - When in the 'index.html' folder, right click and choose the 'Open with Live Server' option. 
 - Click once to start the video, then use:
   - **N** = end rep and hide until end
