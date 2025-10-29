@@ -4,8 +4,13 @@ A p5.js prototype that annotates volleyball sets from video and reports metrics
 (peak height, set width). Built for athlete self-analysis and empowerment.
 
 ## Run locally
-- From Github, click on the big green button that says 'Code' 
-- Open with VS Code, and ensure all three files are loaded in.=
+- First, make sure Visual Studio Code is downloaded onto your desktop. 
+- From opening the link to go to my project in Github, click on the big green button that says 'Code', scroll down to the bottom and click 'Download Zip'.
+- Open the folder in VS Code, go to File ▸ Open Folder…, select the volleyvision_ folder, and you should see these files:
+index.html
+sketch.js
+stupid training.mp4
+- Click the Extensions icon (left toolbar) in VS Studio, search Live Server (by Ritwick Dey), and click Install.
 - When in the 'index.html' folder, right click and choose the 'Open with Live Server' option. 
 - Click once to start the video, then use:
   - **N** = end rep and hide until end
