@@ -4,7 +4,7 @@ A p5.js prototype that annotates volleyball sets from video and reports metrics
 (peak height, set width). Built for athlete self-analysis and empowerment.
 
 ## Run locally
-- First, make sure Visual Studio Code is downloaded onto your desktop. 
+- First, make sure Visual Studio Code is downloaded onto your desktop. (can get it from this link https://code.visualstudio.com/)
 - From opening the link to go to my project in Github, click on the big green button that says 'Code', scroll down to the bottom and click 'Download Zip'.
 - Open the folder in VS Code, go to File ▸ Open Folder…, select the volleyvision_ folder, and you should see these files:
 index.html
