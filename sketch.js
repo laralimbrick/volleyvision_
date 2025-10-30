@@ -18,7 +18,7 @@
  * Files
  * - index.html (loads p5.js and this file)
  * - sketch.js (this file)
- * - stupid training.mp4 (video in the same folder)
+ * - stupid-training.mp4 (video in the same folder)
  */
 
 // ------------------------------ Global constants ------------------------------
@@ -104,17 +104,17 @@ function setup() {
   textFont('system-ui');
 
   // Create the <video>, but we’ll draw it on the canvas with image(vid, ...)
-  vid = createVideo('stupid training.mp4', () => console.log('video element created'));
+  // ⚠️ If you keep the original filename with a space, use 'stupid training.mp4' instead.
+  vid = createVideo('stupid-training.mp4', () => console.log('video element created'));
   vid.attribute('playsinline', ''); // stay inline on iOS instead of fullscreen
   vid.attribute('muted', '');       // allow autoplay in browsers that require muted
   vid.volume(0);                    // ensure silence
   vid.hide();                       // hide the DOM element; we draw frames ourselves
 
-  // Once the browser has enough data to decode frames, mark ready and “prime” a frame
-  vid.elt.onloadeddata = () => {
-    ready = true;
-    primeVideo(); // briefly play→pause so a real frame is visible in calibration
-  };
+  // Once the browser has enough data to decode frames, mark ready.
+  vid.elt.onloadeddata = () => { ready = true; };
+  // NEW: extra hook some browsers fire when the first frame is ready to paint
+  vid.elt.oncanplay = () => { ready = true; };
 
   // Basic error logging if the video fails to load
   vid.elt.onerror = (e) => console.error('VIDEO ERROR', e);
@@ -210,6 +210,12 @@ function draw() {
   // Always draw the current video frame first (if available)
   if (ready) image(vid, 0, 0, width, height);
 
+  // NEW: If the browser hasn’t produced a decodable frame yet, guide the user.
+  if (!warmed) {
+    centerMsg('Click once to load video');
+    // Don’t return; we still want the calibration banner to be visible when applicable.
+  }
+
   // ---- CALIBRATION MODE (before any recording) ----
   if (calibStep < 4) {
     if (!warmed) primeVideo(); // ensure a frame is visible during calibration
@@ -263,7 +269,7 @@ function primeVideo() {
     vid.pause();
     warmed = true;
     redraw(); // trigger a paint so the first frame appears
-  }, 120); // increase to 180–240ms on very slow machines
+  }, 150); // tweak (120–240ms) for slower machines
 }
 
 // ------------------------------ Calibration UI ---------------------------------
@@ -351,11 +357,11 @@ function centerMsg(msg) {
 // ------------------------------ Mouse interaction ------------------------------
 
 function mousePressed() {
+  // NEW: If the video hasn’t been primed yet, do that on the very first click.
+  if (!warmed) { primeVideo(); return; }
+
   // --- Handle calibration clicks first ---
   if (calibStep < 4) {
-    // First click during calibration primes the video if needed
-    if (!warmed) { primeVideo(); return; }
-
     // Record the four calibration points in order
     const pt = { x: mouseX, y: mouseY };
     if (calibStep === 0) calibPts.LB = pt;
@@ -676,3 +682,5 @@ function restartVideoHidden() {
   started = true;
   updateDashboard();
 }
+
+
